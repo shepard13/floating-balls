@@ -7,6 +7,7 @@
 class Ball {
 public:
     Ball(GLfloat x, GLfloat y, GLfloat speedX, GLfloat speedY);
+    Ball(const Ball &ball);
     ~Ball();
     void draw();
     void move();

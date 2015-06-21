@@ -4,7 +4,7 @@ project(floating_balls)
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
 
 set(SOURCE_FILES main.cpp)
-add_executable(floating_balls ${SOURCE_FILES} Ball.cpp Ball.h)
+add_executable(floating_balls ${SOURCE_FILES} Ball.cpp Ball.h Scene.cpp Scene.h)
 
 find_package(OpenGL REQUIRED)
 include_directories(${OPENGL_INCLUDE_DIR})

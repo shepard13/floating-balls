@@ -1,14 +1,14 @@
 #include <iostream>
 #include <GL/glut.h>
-#include "Ball.h"
+#include "Scene.h"
 
 #define WINDOW_POSITION_X 50
 #define WINDOW_POSITION_Y 25
 #define WINDOW_WIDTH 600
 #define WINDOW_HEIGHT 600
-#define ANIMATION_INTERVAL 20
+#define ANIMATION_INTERVAL 200
 
-Ball ball = Ball(0.0f, 0.0f, 0.05f, 0.01f);
+Scene scene = Scene(10);
 
 void draw(void) {
     std::cout << "Redraw." <<std::endl;
@@ -22,7 +22,7 @@ void draw(void) {
     GLfloat position[] = {2.0f, 2.0f, -2.5f, 0.1f};
     glLightfv(GL_LIGHT0, GL_POSITION, position);
 
-    ball.draw();
+    scene.draw();
 
     glutSwapBuffers();
 }
@@ -33,7 +33,7 @@ void windowStatusHandler(int windowState) {
 }
 
 void timerHandler(int value) {
-    ball.move();
+    scene.tick();
     glutPostRedisplay();
     glutTimerFunc(ANIMATION_INTERVAL, timerHandler, value);
 }

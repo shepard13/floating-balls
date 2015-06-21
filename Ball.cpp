@@ -48,3 +48,10 @@ void Ball::move() {
         this->y -= this->y - this->RADIUS + 1;
     }
 }
+
+Ball::Ball(const Ball &ball) {
+    this->x = ball.x;
+    this->y = ball.y;
+    this->speedX = ball.speedX;
+    this->speedY = ball.speedY;
+}
