@@ -4,6 +4,7 @@
 
 #include "Ball.h"
 #include <GL/glut.h>
+#include <cmath>
 
 Ball::Ball(GLfloat x, GLfloat y, GLfloat speedX, GLfloat speedY) {
     this->x = x;
@@ -23,35 +24,56 @@ void Ball::draw() {
     glPopMatrix();
 }
 
-
-void Ball::move() {
-    this->x += this->speedX;
-    this->y += this->speedY;
-
-    if (this->x + this->RADIUS > 1) {
-        this->speedX = -this->speedX;
-        this->x -= this->x + this->RADIUS - 1;
-    }
-
-    if (this->y + this->RADIUS > 1) {
-        this->speedY = -this->speedY;
-        this->y -= this->y + this->RADIUS - 1;
-    }
-
-    if (this->x - this->RADIUS < -1) {
-        this->speedX = -this->speedX;
-        this->x -= this->x - this->RADIUS + 1;
-    }
-
-    if (this->y - this->RADIUS < -1) {
-        this->speedY = -this->speedY;
-        this->y -= this->y - this->RADIUS + 1;
-    }
-}
-
 Ball::Ball(const Ball &ball) {
     this->x = ball.x;
     this->y = ball.y;
     this->speedX = ball.speedX;
     this->speedY = ball.speedY;
+}
+
+bool Ball::isColliding(Ball &ball) {
+    GLfloat deltaX = ball.getX() - this->getX();
+    GLfloat deltaY = ball.getY() - this->getY();
+
+    GLfloat minimalDistance = this->getRadius() + ball.getRadius();
+
+    GLfloat distance = (GLfloat)sqrt(deltaX * deltaX + deltaY * deltaY);
+
+    return distance <= minimalDistance;
+}
+
+GLfloat Ball::getX() {
+    return this->x;
+}
+
+GLfloat Ball::getY() {
+    return this->y;
+}
+
+GLfloat Ball::getRadius() {
+    return this->RADIUS;
+}
+
+void Ball::setX(GLfloat x) {
+    this->x = x;
+}
+
+void Ball::setY(GLfloat y) {
+    this->y = y;
+}
+
+void Ball::setSpeedX(GLfloat speedX) {
+    this->speedX = speedX;
+}
+
+void Ball::setSpeedY(GLfloat speedY) {
+    this->speedY = speedY;
+}
+
+GLfloat Ball::getSpeedX() {
+    return this->speedX;
+}
+
+GLfloat Ball::getSpeedY() {
+    return this->speedY;
 }

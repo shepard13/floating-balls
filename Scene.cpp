@@ -2,10 +2,11 @@
 // Created by shepard on 21.06.15.
 //
 
+#include <iostream>
 #include "Scene.h"
 
 void Scene::draw() {
-    std::vector<Ball*>::iterator iterator = this->balls.begin();
+    std::vector<Ball *>::iterator iterator = this->balls.begin();
     while (iterator != this->balls.end()) {
         (*iterator)->draw();
         iterator++;
@@ -13,16 +14,11 @@ void Scene::draw() {
 }
 
 Scene::Scene(int ballsCount) {
-    Ball ball = Ball(0.9f, 0.0f, 0.05f, 0.01f);
+    Ball ball = Ball(0.0f, 0.0f, 0.05f, 0.01f);
     this->add(ball);
-    Ball ball2 = Ball(0.8f, 0.0f, -0.05f, 0.02f);
+
+    Ball ball2 = Ball(1.0f, 0.0f, 0.05f, 0.003f);
     this->add(ball2);
-    Ball ball3 = Ball(0.7f, 0.0f, -0.05f, 0.03f);
-    this->add(ball3);
-    Ball ball4 = Ball(0.6f, 0.0f, -0.05f, 0.04f);
-    this->add(ball4);
-    Ball ball5 = Ball(0.5f, 0.0f, -0.05f, 0.5f);
-    this->add(ball5);
 }
 
 Scene::~Scene() {
@@ -34,9 +30,55 @@ void Scene::add(Ball &ball) {
 }
 
 void Scene::tick() {
-    std::vector<Ball*>::iterator iterator = this->balls.begin();
+    // Move balls
+    std::vector<Ball *>::iterator iterator = this->balls.begin();
     while (iterator != this->balls.end()) {
-        (*iterator)->move();
+        this->moveBall(**iterator);
         iterator++;
+    }
+
+    // Check for collisions
+    std::vector<Ball *>::iterator outerIterator = this->balls.begin();
+    while (outerIterator != this->balls.end()) {
+
+        std::vector<Ball *>::iterator innerIterator = this->balls.begin();
+        while (innerIterator != this->balls.end()) {
+            if (&(*innerIterator) == &(*outerIterator)) {
+                innerIterator++;
+                continue;
+            }
+
+            std::cout << "Is colliding: " <<
+                    (*innerIterator)->isColliding(**outerIterator) << std::endl;
+            innerIterator++;
+        }
+
+        outerIterator++;
+    }
+
+}
+
+void Scene::moveBall(Ball &ball) {
+    ball.setX(ball.getX() + ball.getSpeedX());
+    ball.setY(ball.getY() + ball.getSpeedY());
+
+    if (ball.getX() + ball.getRadius() > 1) {
+        ball.setSpeedX(-ball.getSpeedX());
+        ball.setX(-ball.getRadius() + 1);
+    }
+
+    if (ball.getY() + ball.getRadius() > 1) {
+        ball.setSpeedY(-ball.getSpeedY());
+        ball.setY(-ball.getRadius() + 1);
+    }
+
+    if (ball.getX() - ball.getRadius() < -1) {
+        ball.setSpeedX(-ball.getSpeedX());
+        ball.setX(ball.getRadius() - 1);
+    }
+
+    if (ball.getY() - ball.getRadius() < -1) {
+        ball.setSpeedY(-ball.getSpeedY());
+        ball.setY(ball.getRadius() - 1);
     }
 }

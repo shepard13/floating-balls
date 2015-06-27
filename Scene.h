@@ -15,8 +15,13 @@ public:
     ~Scene();
     void draw();
     void tick();
+    void moveBall(Ball &ball);
 
 private:
+    const GLfloat MIN_X = -1;
+    const GLfloat MAX_X = 1;
+    const GLfloat MIN_Y = -1;
+    const GLfloat MAX_Y = 1;
     void add(Ball &ball);
     std::vector<Ball*> balls;
 };

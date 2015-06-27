@@ -10,7 +10,23 @@ public:
     Ball(const Ball &ball);
     ~Ball();
     void draw();
-    void move();
+
+    bool isColliding(Ball &ball);
+
+    GLfloat getX();
+    void setX(GLfloat x);
+
+    GLfloat getY();
+    void setY(GLfloat y);
+
+    GLfloat getSpeedX();
+    void setSpeedX(GLfloat speedX);
+
+    GLfloat getSpeedY();
+
+    void setSpeedY(GLfloat speedY);
+
+    GLfloat getRadius();
 
 private:
     const GLfloat RADIUS = 0.2f;
